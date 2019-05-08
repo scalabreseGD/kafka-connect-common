@@ -74,6 +74,8 @@ object SinkRecordToJson extends ConverterUtil {
             ignoreFields.getOrElse(record.topic(), Set.empty))
 
           simpleJsonConverter.fromConnectData(extracted.valueSchema(), extracted.value()).toString
+        case Schema.Type.ARRAY =>
+          simpleJsonConverter.fromConnectData(record.valueSchema(), record.value()).toString
 
         case other => sys.error(s"$other schema is not supported")
       }
